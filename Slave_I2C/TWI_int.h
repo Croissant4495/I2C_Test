@@ -32,6 +32,7 @@ TWI_ERROR_STATUS M_TWI_u8_SendSlaveAddressWrite(u8);
 TWI_ERROR_STATUS M_TWI_u8_SendSlaveAddressRead(u8);
 TWI_ERROR_STATUS M_TWI_u8_SendByte(u8);
 TWI_ERROR_STATUS M_TWI_u8_ReadByte(u8 *TWI_DATA);
+u8 M_TWI_SLAVE_ADDRESS_LISTEN(void);
 
 /********************************************************************************************/
 

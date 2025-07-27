@@ -18,66 +18,59 @@
 //#include "KPD_Interface.h"
 #include "LCD_Interface.h"
 //#include "TIMER1_int.h"
-//#include "TWI_int.h"
+#include "TWI_int.h"
 //#include "TWI_private.h"
 //#include "EXT_EEPROM_int.h"
-//#include <avr/interrupt.h>
 //#include"string.h"
 
 #ifndef F_CPU
 #define F_CPU 8000000UL
 #endif
 
+// ___________SLAVE_CODE___________
+
 int main()
 {
-	u8 data = 2;
+	u16 data = 0;
+	u8 high_byte = 0;
+	u8 low_byte = 0;
+	u8 status = 0;
 //	u8 old_data;
 	LCD_voidInit();
-//	M_TWI_void_Init();
+	M_TWI_void_Init();
 
-//
-//	EXTINT_voidInit(EXT0_ID,FALLING_EDGE);
-//	EXTINT_voidSetCallBack(toggle_LED, EXT0_ID);
+	DIO_voidSetPinDirection(PORTD_ID, PIN7, PIN_OUTPUT);
+	DIO_voidSetPinDirection(PORTD_ID, PIN6, PIN_OUTPUT);
 
-//	ADC_voidInit();
-//	ADC_voidChannelSellect(CHANNEL_1);
+	DIO_voidSetPinValue(PORTD_ID, PIN7, PIN_LOW);
+	DIO_voidSetPinValue(PORTD_ID, PIN6, PIN_LOW);
 
-//	DIO_voidSetPinDirection(PORTB_ID, PIN2, PIN_OUTPUT);
-//	DIO_voidSetPinDirection(PORTC_ID, PIN0, PIN_OUTPUT);
-
-//	ADC_StartConversion()
-	LCD_voidClear();
-	LCD_voidGoToXY(0,0);
-	LCD_voidWriteNumber(0);
-	_delay_ms(500);
-
-//	GIE_Enable();
+	GIE_Enable();
 	while(1)
 	{
-//		ADC_StartConversionBoling(&data);
-//		data = ADC_Mapping(0, 1023, 0, 100);
+		status = M_TWI_SLAVE_ADDRESS_LISTEN();
 
+		if (status == 0){
+			// Write
+			DIO_voidSetPinValue(PORTD_ID, PIN6, PIN_LOW);
+			DIO_voidToggelPin(PORTD_ID, PIN7);
 
-		UART_U8ReceiveChar(&data);
-		LCD_voidClear();
-		LCD_voidGoToXY(0,0);
-		LCD_voidWriteNumber(data);
-		_delay_ms(200);
-//			old_data = data
-//
-//			TIMER0_VoidSetPWMCompareMatch(data);
-////			TIMER0_VoidInit();
-////			TIMER0_VoidStart();
-////			_delay_ms(200);
-//		while(M_TWI_u8_SendSlaveAddressRead((data + count)) != NO_ERROR);
-//		while()
-		LCD_voidClear();
-		LCD_voidGoToXY(0,0);
-//		LCD_voidWriteNumber(*(data + count));
-//		count = (count + 1) % 10;
-//		M_TWI_u8_ReadByte();
+		    M_TWI_u8_ReadByte(&high_byte);  // Read high byte
+		    M_TWI_u8_ReadByte(&low_byte);   // Read low byte
 
-
+		    u16 data = ((u16)high_byte << 8) | low_byte;
+		    LCD_voidClear();
+			LCD_voidWriteNumber(data);
+		}else if(status == 1){
+			// Read
+			DIO_voidSetPinValue(PORTD_ID, PIN6, PIN_HIGH);
+			DIO_voidToggelPin(PORTD_ID, PIN7);
+		}else if(status == 2){
+			// Wrong address
+			DIO_voidSetPinValue(PORTD_ID, PIN6, PIN_HIGH);
+			DIO_voidSetPinValue(PORTD_ID, PIN7, PIN_HIGH);
+		}
+		_delay_ms(500);
 	}/* end of ----->  while(1)*/
 
 

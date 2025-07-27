@@ -16,28 +16,28 @@
 /*
  * choose control pins
  */
-#define RS_PIN   PIN6
-#define RS_PORT  PORTC_ID
+#define RS_PIN   PIN2
+#define RS_PORT  PORTB_ID
 
 
-#define EN_PIN   PIN7
-#define EN_PORT  PORTC_ID
+#define EN_PIN   PIN3
+#define EN_PORT  PORTB_ID
 
 
 /*
  * data pins
  */
-#define D7_PIN    PIN5
-#define D7_PORT   PORTC_ID
+#define D7_PIN    PIN7
+#define D7_PORT   PORTB_ID
 
-#define D6_PIN    PIN4
-#define D6_PORT   PORTC_ID
+#define D6_PIN    PIN6
+#define D6_PORT   PORTB_ID
 
-#define D5_PIN    PIN3
-#define D5_PORT   PORTC_ID
+#define D5_PIN    PIN5
+#define D5_PORT   PORTB_ID
 
-#define D4_PIN    PIN2
-#define D4_PORT   PORTC_ID
+#define D4_PIN    PIN4
+#define D4_PORT   PORTB_ID
 
 
 

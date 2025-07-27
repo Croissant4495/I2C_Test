@@ -27,7 +27,7 @@
 /*
  * select TWI_MODE : TWI_MASTER_MODE , TWI_SLAVE_MODE
  */
-#define TWI_MODE    TWI_MASTER_MODE
+#define TWI_MODE    TWI_SLAVE_MODE
 
 
 
