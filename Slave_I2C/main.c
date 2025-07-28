@@ -55,12 +55,12 @@ int main()
 			DIO_voidSetPinValue(PORTD_ID, PIN6, PIN_LOW);
 			DIO_voidToggelPin(PORTD_ID, PIN7);
 
-		    M_TWI_u8_ReadByte(&high_byte);  // Read high byte
+//		    M_TWI_u8_ReadByte(&high_byte);  // Read high byte
 		    M_TWI_u8_ReadByte(&low_byte);   // Read low byte
-
-		    u16 data = ((u16)high_byte << 8) | low_byte;
+//
+//		    data = ((u16)high_byte << 8) | low_byte;
 		    LCD_voidClear();
-			LCD_voidWriteNumber(data);
+			LCD_voidWriteNumber(low_byte);
 		}else if(status == 1){
 			// Read
 			DIO_voidSetPinValue(PORTD_ID, PIN6, PIN_HIGH);

@@ -215,7 +215,7 @@ TWI_ERROR_STATUS  M_TWI_u8_ReadByte(u8 *TWI_DATA)
 	TWI_ERROR_STATUS local_error =NO_ERROR ;
 
 
-	SET_BIT(TWCR_REG,TWCR_TWINT);   /* to clear the flag */
+	TWCR_REG = (1 << TWCR_TWEN) | (1 << TWCR_TWEA) | (1 << TWCR_TWINT);
 
 	while(GET_BIT(TWCR_REG,TWCR_TWINT) == 0);
 /*

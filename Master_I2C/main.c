@@ -60,7 +60,7 @@ int main()
 			if (M_TWI_u8_SendSlaveAddressWrite(1) == NO_ERROR) {
 //				_delay_ms(100);
 
-				if (M_TWI_u8_SendByte(data_high) == NO_ERROR) {
+//				if (M_TWI_u8_SendByte(data_high) == NO_ERROR) {
 //					_delay_ms(100);
 
 					if (M_TWI_u8_SendByte(data_low) == NO_ERROR) {
