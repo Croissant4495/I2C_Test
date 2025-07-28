@@ -234,21 +234,52 @@ TWI_ERROR_STATUS  M_TWI_u8_ReadByte(u8 *TWI_DATA)
 	return  local_error ;
 }
 
-u8 M_TWI_SLAVE_ADDRESS_LISTEN(void){
-	// WAIT TO GET ADDRESSED
-	while(GET_BIT(TWCR_REG, TWCR_TWINT) == 0);
-	u8 status = TWSR_REG & 0xF8;
+u8 M_TWI_SLAVE_ADDRESS_LISTEN(void) {
+	TWCR_REG = (1 << TWCR_TWEN) | (1 << TWCR_TWEA) | (1 << TWCR_TWINT);
 
-	if(status==0x60||status==0x68)	/* Own SLA+W received &ack returned */
-		return 0;
-	else if(status==0xA8||status==0xB0)	/* Own SLA+R received &ack returned */
-		return 1;
-	else
-		return 2;
+    while (GET_BIT(TWCR_REG, TWCR_TWINT) == 0);
+    u8 status = TWSR_REG & 0xF8;
+
+    if (status == 0x60 || status == 0x68) {  // SLA+W received
+        TWCR_REG = (1 << TWCR_TWINT) | (1 << TWCR_TWEA) | (1 << TWCR_TWEN);
+        return 0;
+    } else if (status == 0xA8 || status == 0xB0) {  // SLA+R received
+        TWCR_REG = (1 << TWCR_TWINT) | (1 << TWCR_TWEA) | (1 << TWCR_TWEN);
+        return 1;
+    } else {
+        TWCR_REG = (1 << TWCR_TWINT) | (1 << TWCR_TWEA) | (1 << TWCR_TWEN);
+        return 2;
+    }
 }
 
 u8 M_TWI_SLAVE_BYTE_LISTEN(void){
 	// WAIT TO GET ADDRESSED
 	while(GET_BIT(TWCR_REG, TWCR_TWINT) == 0);
 	return 1;
+}
+
+void M_TWI_SLAVE_READBYTES(u16* data) {
+    u8 high_byte = 0, low_byte = 0;
+
+    // 1st byte
+    TWCR_REG = (1 << TWCR_TWINT) | (1 << TWCR_TWEA) | (1 << TWCR_TWEN);
+    while (GET_BIT(TWCR_REG, TWCR_TWINT) == 0);
+    if ((TWSR_REG & 0xF8) != 0x80) return;
+    high_byte = TWDR_REG;
+
+    // 2nd byte
+    TWCR_REG = (1 << TWCR_TWINT) | (1 << TWCR_TWEA) | (1 << TWCR_TWEN);
+    while (GET_BIT(TWCR_REG, TWCR_TWINT) == 0);
+    if ((TWSR_REG & 0xF8) != 0x80) return;
+    low_byte = TWDR_REG;
+
+    *data = ((u16)high_byte << 8) | low_byte;
+
+    // Wait for STOP or Repeated START
+    TWCR_REG = (1 << TWCR_TWINT) | (1 << TWCR_TWEA) | (1 << TWCR_TWEN);
+    while (1) {
+        if (GET_BIT(TWCR_REG, TWCR_TWINT)) {
+            if ((TWSR_REG & 0xF8) == 0xA0) break;  // STOP or repeated START
+        }
+    }
 }

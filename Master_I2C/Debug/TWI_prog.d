@@ -1,5 +1,5 @@
 TWI_prog.o TWI_prog.o: ../TWI_prog.c ../STD_TYPES.h ../BIT_MATH.h \
-  ../TWI_int.h ../TWI_Config.h ../TWI_private.h
+  ../TWI_int.h ../TWI_Config.h ../TWI_private.h ../LCD_Interface.h
 
 ../STD_TYPES.h:
 
@@ -10,3 +10,5 @@ TWI_prog.o TWI_prog.o: ../TWI_prog.c ../STD_TYPES.h ../BIT_MATH.h \
 ../TWI_Config.h:
 
 ../TWI_private.h:
+
+../LCD_Interface.h:

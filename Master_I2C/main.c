@@ -16,7 +16,7 @@
 #include "ADC_Interface.h"
 //#include "TMR0_Interface.h"
 //#include "KPD_Interface.h"
-//#include "LCD_Interface.h"
+#include "LCD_Interface.h"
 //#include "TIMER1_int.h"
 #include "TWI_int.h"
 //#include "TWI_private.h"
@@ -37,41 +37,50 @@ int main()
 //	u8 address = 0;
 //	u8 old_data;
 	M_TWI_void_Init();
+	LCD_voidInit();
 
-//	EXTINT_voidInit(EXT0_ID,FALLING_EDGE);
-//	EXTINT_voidSetCallBack(toggle_LED, EXT0_ID);
+	ADC_voidInit();
+	ADC_voidChannelSellect(CHANNEL_1);
 
-//	ADC_voidInit();
-//	ADC_voidChannelSellect(CHANNEL_1);
-
-//	DIO_voidSetPinDirection(PORTB_ID, PIN2, PIN_OUTPUT);
+	DIO_voidSetPinDirection(PORTA_ID, PIN1, PIN_INPUT);
 //	DIO_voidSetPinDirection(PORTC_ID, PIN0, PIN_OUTPUT);
 
 	GIE_Enable();
 	while(1)
 	{
-//		ADC_StartConversionBoling(&data);
-		data++;
+		ADC_StartConversionBoling(&data);
+		LCD_voidClear();
+		LCD_voidGoToXY(0,0);
+		LCD_voidWriteNumber(data);
 		data_high = (data >> 8) & 0xFF;  // Extract upper 8 bits
 		data_low  = data & 0xFF;
-		if (M_TWI_u8_StartCondition() == NO_ERROR) {
-//			_delay_ms(100);
 
-			if (M_TWI_u8_SendSlaveAddressWrite(1) == NO_ERROR) {
-//				_delay_ms(100);
+		TWI_ERROR_STATUS error;
 
-//				if (M_TWI_u8_SendByte(data_high) == NO_ERROR) {
-//					_delay_ms(100);
-
-					if (M_TWI_u8_SendByte(data_low) == NO_ERROR) {
-//						_delay_ms(100);
-
-						M_TWI_void_StopCondition();
-					}
-				}
-			}
+		if ((error = M_TWI_u8_StartCondition()) != NO_ERROR) {
+		    LCD_voidWriteString((u8 *)"StartErr");
+		    goto stop;
 		}
-		_delay_ms(1000);
+		_delay_ms(1);
+		if ((error = M_TWI_u8_SendSlaveAddressWrite(1)) != NO_ERROR) {
+		    LCD_voidWriteString((u8 *)"AddrErr");
+		    goto stop;
+		}
+		_delay_ms(1);
+		if ((error = M_TWI_u8_SendByte(data_high)) != NO_ERROR) {
+		    LCD_voidWriteString((u8 *)"HighErr");
+		    goto stop;
+		}
+		_delay_ms(1);
+		if ((error = M_TWI_u8_SendByte(data_low)) != NO_ERROR) {
+		    LCD_voidWriteString((u8 *)"LowErr");
+		    goto stop;
+		}
+		_delay_ms(1);
+		stop:
+		M_TWI_void_StopCondition();
+
+		_delay_ms(100);
 
 	}/* end of ----->  while(1)*/
 

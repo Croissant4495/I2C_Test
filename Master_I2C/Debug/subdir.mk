@@ -8,6 +8,7 @@ C_SRCS += \
 ../DIO_Program.c \
 ../EXTINT_Program.c \
 ../GIE_Program.c \
+../LCD_Program.c \
 ../TWI_prog.c \
 ../main.c 
 
@@ -16,6 +17,7 @@ OBJS += \
 ./DIO_Program.o \
 ./EXTINT_Program.o \
 ./GIE_Program.o \
+./LCD_Program.o \
 ./TWI_prog.o \
 ./main.o 
 
@@ -24,6 +26,7 @@ C_DEPS += \
 ./DIO_Program.d \
 ./EXTINT_Program.d \
 ./GIE_Program.d \
+./LCD_Program.d \
 ./TWI_prog.d \
 ./main.d 
 

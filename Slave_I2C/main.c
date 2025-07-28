@@ -32,8 +32,8 @@
 int main()
 {
 	u16 data = 0;
-	u8 high_byte = 0;
-	u8 low_byte = 0;
+//	u8 high_byte = 0;
+//	u8 low_byte = 0;
 	u8 status = 0;
 //	u8 old_data;
 	LCD_voidInit();
@@ -55,12 +55,10 @@ int main()
 			DIO_voidSetPinValue(PORTD_ID, PIN6, PIN_LOW);
 			DIO_voidToggelPin(PORTD_ID, PIN7);
 
-//		    M_TWI_u8_ReadByte(&high_byte);  // Read high byte
-		    M_TWI_u8_ReadByte(&low_byte);   // Read low byte
-//
-//		    data = ((u16)high_byte << 8) | low_byte;
+			M_TWI_SLAVE_READBYTES(&data);
+
 		    LCD_voidClear();
-			LCD_voidWriteNumber(low_byte);
+			LCD_voidWriteNumber(data);
 		}else if(status == 1){
 			// Read
 			DIO_voidSetPinValue(PORTD_ID, PIN6, PIN_HIGH);
@@ -70,7 +68,7 @@ int main()
 			DIO_voidSetPinValue(PORTD_ID, PIN6, PIN_HIGH);
 			DIO_voidSetPinValue(PORTD_ID, PIN7, PIN_HIGH);
 		}
-		_delay_ms(500);
+//		_delay_ms(500);
 	}/* end of ----->  while(1)*/
 
 

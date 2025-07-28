@@ -146,7 +146,7 @@ LOAD c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a
 .rela.plt
  *(.rela.plt)
 
-.text           0x00000000     0x1e50
+.text           0x00000000     0x1e3a
  *(.vectors)
  .vectors       0x00000000       0x54 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5/crtm32.o
                 0x00000000                __vectors
@@ -330,29 +330,32 @@ LOAD c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a
                 0x00001aec       0x54 ./TWI_prog.o
                 0x00001aec                M_TWI_u8_SendByte
  .text.M_TWI_u8_ReadByte
-                0x00001b40       0x46 ./TWI_prog.o
+                0x00001b40       0x40 ./TWI_prog.o
                 0x00001b40                M_TWI_u8_ReadByte
  .text.M_TWI_SLAVE_ADDRESS_LISTEN
-                0x00001b86       0x50 ./TWI_prog.o
-                0x00001b86                M_TWI_SLAVE_ADDRESS_LISTEN
+                0x00001b80       0x70 ./TWI_prog.o
+                0x00001b80                M_TWI_SLAVE_ADDRESS_LISTEN
  .text.M_TWI_SLAVE_BYTE_LISTEN
-                0x00001bd6       0x1a ./TWI_prog.o
-                0x00001bd6                M_TWI_SLAVE_BYTE_LISTEN
- .text.main     0x00001bf0      0x1aa ./main.o
-                0x00001bf0                main
- .text.libgcc   0x00001d9a       0x44 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_udivmodsi4.o)
-                0x00001d9a                __udivmodsi4
- .text.libgcc   0x00001dde        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
- .text.libgcc   0x00001dde       0x38 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_prologue.o)
-                0x00001dde                __prologue_saves__
- .text.libgcc   0x00001e16       0x36 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_epilogue.o)
-                0x00001e16                __epilogue_restores__
- .text.libgcc   0x00001e4c        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_copy_data.o)
-                0x00001e4c                . = ALIGN (0x2)
+                0x00001bf0       0x1a ./TWI_prog.o
+                0x00001bf0                M_TWI_SLAVE_BYTE_LISTEN
+ .text.M_TWI_SLAVE_READBYTES
+                0x00001c0a       0xc0 ./TWI_prog.o
+                0x00001c0a                M_TWI_SLAVE_READBYTES
+ .text.main     0x00001cca       0xba ./main.o
+                0x00001cca                main
+ .text.libgcc   0x00001d84       0x44 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_udivmodsi4.o)
+                0x00001d84                __udivmodsi4
+ .text.libgcc   0x00001dc8        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
+ .text.libgcc   0x00001dc8       0x38 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_prologue.o)
+                0x00001dc8                __prologue_saves__
+ .text.libgcc   0x00001e00       0x36 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_epilogue.o)
+                0x00001e00                __epilogue_restores__
+ .text.libgcc   0x00001e36        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_copy_data.o)
+                0x00001e36                . = ALIGN (0x2)
  *(.fini9)
- .fini9         0x00001e4c        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
-                0x00001e4c                exit
-                0x00001e4c                _exit
+ .fini9         0x00001e36        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
+                0x00001e36                exit
+                0x00001e36                _exit
  *(.fini9)
  *(.fini8)
  *(.fini8)
@@ -371,11 +374,11 @@ LOAD c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a
  *(.fini1)
  *(.fini1)
  *(.fini0)
- .fini0         0x00001e4c        0x4 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
+ .fini0         0x00001e36        0x4 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
  *(.fini0)
-                0x00001e50                _etext = .
+                0x00001e3a                _etext = .
 
-.data           0x00800060        0x8 load address 0x00001e50
+.data           0x00800060        0x8 load address 0x00001e3a
                 0x00800060                PROVIDE (__data_start, .)
  *(.data)
  .data          0x00800060        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5/crtm32.o
@@ -437,8 +440,8 @@ LOAD c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a
  *(.bss*)
  *(COMMON)
                 0x00800068                PROVIDE (__bss_end, .)
-                0x00001e50                __data_load_start = LOADADDR (.data)
-                0x00001e58                __data_load_end = (__data_load_start + SIZEOF (.data))
+                0x00001e3a                __data_load_start = LOADADDR (.data)
+                0x00001e42                __data_load_end = (__data_load_start + SIZEOF (.data))
 
 .noinit         0x00800068        0x0
                 0x00800068                PROVIDE (__noinit_start, .)
@@ -463,21 +466,21 @@ LOAD c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a
 .signature
  *(.signature*)
 
-.stab           0x00000000     0x1a28
+.stab           0x00000000     0x1a7c
  *(.stab)
  .stab          0x00000000      0x564 ./DIO_Program.o
  .stab          0x00000564      0x144 ./GIE_Program.o
                                 0x1d4 (size before relaxing)
  .stab          0x000006a8      0x9cc ./LCD_Program.o
                                 0xa5c (size before relaxing)
- .stab          0x00001074      0x678 ./TWI_prog.o
-                                0x894 (size before relaxing)
- .stab          0x000016ec      0x33c ./main.o
-                                0x57c (size before relaxing)
+ .stab          0x00001074      0x7a4 ./TWI_prog.o
+                                0x9c0 (size before relaxing)
+ .stab          0x00001818      0x264 ./main.o
+                                0x4a4 (size before relaxing)
 
-.stabstr        0x00000000      0xdea
+.stabstr        0x00000000      0xe1c
  *(.stabstr)
- .stabstr       0x00000000      0xdea ./DIO_Program.o
+ .stabstr       0x00000000      0xe1c ./DIO_Program.o
 
 .stab.excl
  *(.stab.excl)
